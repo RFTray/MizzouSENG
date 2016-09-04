@@ -1,7 +1,6 @@
 body {
     background-color: #EEE;
 }
-    
 #graph .choice {
     float: left;
     font-family: arial;
@@ -10,7 +9,6 @@ body {
     text-align: right;
     margin: 8px 5px;
 }
-
 #graph .bar {
     width: 0;
     height: 35px;
@@ -18,26 +16,8 @@ body {
     margin: 5px;
     float: left;
 }
-
 .group:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-#dgraph .choice {
-    float: left;
-    font-family: arial;
-    font-size: 1.5em;
-    min-width: 200px;
-    text-align: right;
-    margin: 8px 5px;
-    }
-    
-#dgraph .bar {
-    width: 0;
-    height: 35px;
-    background-color: coral;
-    margin: 5px;
-    float: left;
+  content: "";
+  display: table;
+  clear: both;
 }
