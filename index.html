@@ -10,35 +10,55 @@
     
     <div id="graph"></div>
     
+<div id="graph"></div>
+    <div id="dgraph"> </div>
     <script>
-        
-        var url = "http://elections.huffingtonpost.com/pollster/api/charts/2016-national-gop-primary";
-        
-        $.ajax(url, {
-            dataType: "jsonp",
-            jsonpCallback: "pollsterCallback",
-            cache: true,
-            success: function(data) {
-                
-                var candidateBar = d3.select("#graph").selectAll("div").data(data.estimates),
-                    candidateWrapper = candidateBar.enter().append("div").classed("group", true);
-                
-                candidateWrapper.append("div")
-                    .classed("choice", true)
-                    .text(function(candidate) {
-                        return candidate.choice + " " + candidate.value + "%";
-                    });
-                
-                candidateWrapper.append("div")
-                    .classed("bar", true)
-                    .transition()
-                    .duration(1000)
-                    .style("width", function(candidate) {
-                        return candidate.value * 10 + "px";
-                    });
-                
-            }
-        });
+    	function callGOP(){
+		var url = "http://elections.huffingtonpost.com/pollster/api/charts/2016-national-gop-primary";
+		$.ajax(url, {
+			dataType: "jsonp",
+			jsonpCallback: "pollsterCallback",
+			cache: true,
+			success: function(data) {
+				
+				var candidateBar = d3.select("#graph").selectAll("div").data(data.estimates),
+				candidateWrapper = candidateBar.enter().append("div").classed("group", true);
+				candidateWrapper.append("div").classed("choice", true).text(function(candidate) {
+					return candidate.choice + " " + candidate.value + "%";
+				});																															                    
+				candidateWrapper.append("div").classed("bar", true).transition().duration(1000).style("width", function(candidate) {
+					return candidate.value * 10 + "px";
+				}).style("background-color", "red");
+				callDem();
+				}
+		        });
+	}
+	
+	function callDem(){
+		var url = "http://elections.huffingtonpost.com/pollster/api/charts/2016-national-democratic-primary";
+		
+		$.ajax(url, {
+			dataType: "jsonp",
+			jsonpCallback: "pollsterCallback",				
+			cache: true,
+			success: function(data) {
+				
+				var dcandidateBar = d3.select("#dgraph").selectAll("div").data(data.estimates),
+		                dcandidateWrapper = dcandidateBar.enter().append("div").classed("group", true);
+	
+				dcandidateWrapper.append("div").classed("choice", true).text(function(candidate) {
+					if(candidate.choice=="Clinton" || candidate.choice=="Sanders" || candidate.choice=="O'Malley" || candidate.choice=="Undecided" || candidate.choice=="Other"){
+						return candidate.choice + " " + candidate.value + "%";}
+				});
+				
+				dcandidateWrapper.append("div").classed("bar", true).transition().duration(1000).style("width", function(candidate) {
+					if(candidate.choice=="Clinton" || candidate.choice=="Sanders" || candidate.choice=="O'Malley" || candidate.choice=="Undecided" || candidate.choice=="Other"){
+						return candidate.value * 10 + "px";}
+				}).style("background-color", "blue");
+			}
+		});
+	}
+        callGOP();
     </script>
 </body>
 </html>
